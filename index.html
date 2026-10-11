@@ -624,13 +624,8 @@
 					<p class="hint">选择期次即可跳转查看</p>
 					<select id="archiveSelect" onchange="if(this.value) window.location.href = this.value;">
 						<option value="">— 选择期次跳转 —</option>
-						<!--
-							每期发布时在此追加一行（正式域名下用相对路径，长期有效）：
-							<option value="issue-2.html">2026 年 10 月 · 第 2 期</option>
-							预览模式下跳转需带目标页的完整 token，且 token 3 小时过期，建议绑定正式域名后使用。
-						-->
+						<option value="issue-1.html">2026 年 10 月 · 第 1 期</option>
 						<option value="#" selected>2026 年 10 月 · 第 2 期（当前）</option>
-						<option value="" disabled>更多往期整理中…</option>
 					</select>
 				</div>
 			</div>
@@ -678,8 +673,10 @@
 		(function () {
 			var sel = document.getElementById('archiveSelect');
 			if (sel) {
-				var cur = sel.options[1]; // 第 2 个 option = 当前期
-				if (cur) cur.value = window.location.href;
+				// 当前期（selected 项）跳转保留 EdgeOne 认证参数（token 丢失会 401）
+				for (var i = 0; i < sel.options.length; i++) {
+					if (sel.options[i].selected) sel.options[i].value = window.location.href;
+				}
 			}
 		})();
 
